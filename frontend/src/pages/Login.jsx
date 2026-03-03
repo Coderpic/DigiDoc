@@ -46,7 +46,7 @@ export default function Login() {
           <div style={{ padding: 26, borderRight: "1px solid var(--border)" }}>
             <div className="badge" style={{ width: "fit-content" }}>🛡️ Secure Authentication</div>
             <h1 style={{ margin: "14px 0 8px", fontSize: 34, letterSpacing: 0.2 }}>
-              DigitalSig <span style={{ color: "var(--brand-2)" }}>Verify</span>
+              DigiDoc <span style={{ color: "var(--brand-2)" }}></span>
             </h1>
             <div className="muted" style={{ lineHeight: 1.6 }}>
               Sign and verify documents using <b>RSA</b> + <b>SHA-256</b>. Maintain integrity and authenticity with a clean enterprise workflow.

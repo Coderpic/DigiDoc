@@ -26,7 +26,7 @@ export default function Sidebar() {
             ✓
           </div>
           <div>
-            <div style={{ fontWeight: 1000 }}>DigitalSig Verify</div>
+            <div style={{ fontWeight: 1000 }}>DigiDoc</div>
             <div className="muted" style={{ fontSize: 12 }}>Secure workflows</div>
           </div>
         </div>

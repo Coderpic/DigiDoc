@@ -46,7 +46,7 @@ export default function Dashboard() {
             <div>
               <div style={{ fontWeight: 1000, fontSize: 16 }}>Generate Key Pair</div>
               <div className="muted" style={{ marginTop: 6, fontSize: 13 }}>
-                Creates RSA-PSS (SHA-256) keys in browser (demo). Backend storage will be added next.
+                Creates RSA (SHA-256) keys securely via backend. Backend storage will be added next.
               </div>
             </div>
             <button className="btn" onClick={onGenerate} disabled={busy}>

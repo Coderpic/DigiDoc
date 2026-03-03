@@ -15,7 +15,7 @@ export default function Navbar({ theme, setTheme }) {
           D
         </div>
         <div>
-          <div style={{ fontWeight: 900, letterSpacing: 0.2 }}>DigitalSig Verify</div>
+          <div style={{ fontWeight: 900, letterSpacing: 0.2 }}>DigiDoc</div>
           <div className="muted" style={{ fontSize: 12 }}>Cryptographic document integrity</div>
         </div>
       </div>

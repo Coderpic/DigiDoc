@@ -22,39 +22,43 @@ function downloadText(filename, content) {
   URL.revokeObjectURL(url);
 }
 
+const API_BASE = "http://localhost:8080/api/crypto";
+
 export const keyService = {
-  getStoredPublicKeyPem() {
-    return localStorage.getItem(PUB_KEY) || "";
-  },
 
   async generateKeyPairAndDownloadPrivate() {
-    if (!window.crypto?.subtle) {
-      throw new Error("WebCrypto not available in this browser");
+
+    const response = await fetch(`${API_BASE}/generate-keys`, {
+      method: "POST"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to generate keys");
     }
 
-    // For signatures use RSA-PSS with SHA-256
-    const keyPair = await window.crypto.subtle.generateKey(
-      {
-        name: "RSA-PSS",
-        modulusLength: 2048,
-        publicExponent: new Uint8Array([1, 0, 1]),
-        hash: "SHA-256",
-      },
-      true,
-      ["sign", "verify"]
-    );
+    const data = await response.json();
 
-    const spki = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
-    const pkcs8 = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+    // Download private key automatically
+    const blob = new Blob([data.privateKey], { type: "text/plain" });
+    const url = window.URL.createObjectURL(blob);
 
-    const publicPem = wrapPem(arrayBufferToBase64(spki), "PUBLIC KEY");
-    const privatePem = wrapPem(arrayBufferToBase64(pkcs8), "PRIVATE KEY");
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "private_key.pem";
+    a.click();
 
-    localStorage.setItem(PUB_KEY, publicPem);
+    window.URL.revokeObjectURL(url);
 
-    // Download private key (NEVER store in DB later)
-    downloadText("digitalsigverify-private-key.pem", privatePem);
+    // Store public key in localStorage
+    localStorage.setItem("publicKey", data.publicKey);
 
-    return { publicPem, privatePemPreview: privatePem.slice(0, 140) + "..." };
+    return {
+      publicPem: data.publicKey
+    };
   },
+
+  getStoredPublicKeyPem() {
+    return localStorage.getItem("publicKey");
+  }
+
 };
